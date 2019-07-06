@@ -4,7 +4,7 @@ import com.example.wenda.dao.LoginticketDao;
 import com.example.wenda.dao.UserDao;
 import com.example.wenda.model.Loginticket;
 import com.example.wenda.model.User;
-import com.example.wenda.utils.WendaUtils;
+import com.example.wenda.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -45,7 +45,7 @@ public class UserService {
         user.setSalt(UUID.randomUUID().toString().substring(0,5));
         user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png",
                 new Random().nextInt(1000)));
-        user.setPassword(WendaUtils.getMD5(user.getSalt()+password));
+        user.setPassword(CommonUtils.getMD5(user.getSalt()+password));
         userDao.addUser(user);
         String ticket = addLoginTicket(user.getId());
         map.put("ticket",ticket);
@@ -74,7 +74,7 @@ public class UserService {
             return map;
         }
 
-        if(!WendaUtils.getMD5(user.getSalt()+password).equals(user.getPassword())){
+        if(!CommonUtils.getMD5(user.getSalt()+password).equals(user.getPassword())){
             map.put("msg","密码错误");
             return map;
         }

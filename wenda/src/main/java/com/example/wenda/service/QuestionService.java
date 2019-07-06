@@ -31,5 +31,13 @@ public class QuestionService {
         question.setTitle(sensitiveService.filter(question.getTitle()));
         return questionDao.addQuestion(question)>0?question.getUserId():0;
     }
+    public Question getquestion(int id){
+        return questionDao.selectQuestionById(id);
+    }
+
+    public int getCommentCounts(int qid,int commentCounts){
+        return questionDao.updateCommentCount(qid,commentCounts);
+    }
+
 
 }
